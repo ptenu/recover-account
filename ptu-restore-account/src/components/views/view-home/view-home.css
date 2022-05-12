@@ -1,0 +1,11 @@
+footer.buttons {
+
+}
+
+footer.buttons button-control {
+  width: min-content;
+}
+
+footer.buttons button-control button {
+  width: min-content;
+}
