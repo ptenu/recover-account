@@ -15,8 +15,10 @@ export namespace Components {
         "history": RouterHistory;
     }
     interface ViewIdentify {
+        "history": RouterHistory;
     }
     interface ViewRecover {
+        "history": RouterHistory;
     }
 }
 declare global {
@@ -67,8 +69,10 @@ declare namespace LocalJSX {
         "history"?: RouterHistory;
     }
     interface ViewIdentify {
+        "history"?: RouterHistory;
     }
     interface ViewRecover {
+        "history"?: RouterHistory;
     }
     interface IntrinsicElements {
         "app-root": AppRoot;

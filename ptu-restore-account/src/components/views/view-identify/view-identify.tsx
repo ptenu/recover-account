@@ -1,11 +1,15 @@
-import { Component, Host, h, State, Fragment } from '@stencil/core';
+import { Component, Host, h, State, Prop } from '@stencil/core';
 import { request } from '../../..';
+import { RouterHistory } from '@stencil/router';
+import state from '../../../global/store';
 
 @Component({
   tag: 'view-identify',
   styleUrl: 'view-identify.css',
 })
 export class ViewIdentify {
+  @Prop() history: RouterHistory;
+
   @State() familyName: string = '';
   @State() emailAddress: string = '';
   @State() errors: Array<string> = [];
@@ -60,34 +64,36 @@ export class ViewIdentify {
     this.validate();
   }
 
-  next() {
+  async next(event) {
+    event.preventDefault();
     this.validate();
     this.submited = true;
     if (this.errors.length > 0) {
       return;
     }
 
-    // @TODO: make request to identify user.
     this.loading = true;
     request
       .post('account/identify', {
         email: this.emailAddress,
         family_name: this.familyName,
       })
-      .catch(error => {
+      .then(resp => {
         this.loading = false;
-
-        if (error.response.status == 403) {
-          this.errors = ['You have already used this service today. Please try again tomorrow'];
-        }
-
         try {
-          let errors = [];
-          const error_text = error.response.data['description'];
-          errors.push(error_text);
-          this.errors = errors;
-        } catch (error) {
-          this.errors = ['There was an error with the server. Please contact an administrator.'];
+          state.challengeMethod = resp.data;
+          this.history.push('/recover');
+        } catch {
+          this.errors = ['The response from the server was invalid, please contact an administrator.'];
+        }
+      })
+      .catch(err => {
+        this.loading = false;
+        try {
+          const errorMessage = err.response.data['description'];
+          this.errors = [errorMessage];
+        } catch {
+          this.errors = ['There was a problem communicating with the server. Please contact an administrator.'];
         }
       });
   }
@@ -105,16 +111,19 @@ export class ViewIdentify {
             </section>
           )}
           {!this.loading && (
-            <Fragment>
+            <form onSubmit={this.next.bind(this)}>
               <section>
                 {this.errors.length > 0 && this.submited && (
                   <alert-element theme="danger" dismissable={false}>
                     <strong style={{ marginBottom: '2ex', display: 'block' }}>There was a problem:</strong>
-                    <ul style={{ columnWidth: 'unset' }}>
-                      {this.errors.map(err => (
-                        <li>{err}</li>
-                      ))}
-                    </ul>
+                    {this.errors.length > 1 && (
+                      <ul style={{ columnWidth: 'unset' }}>
+                        {this.errors.map(err => (
+                          <li>{err}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {this.errors.length == 1 && <p>{this.errors[0]}</p>}
                   </alert-element>
                 )}
 
@@ -129,7 +138,7 @@ export class ViewIdentify {
               <footer class="buttons">
                 <button-control label="Next" theme="primary" onClick={this.next.bind(this)}></button-control>
               </footer>
-            </Fragment>
+            </form>
           )}
         </content-container>
       </Host>

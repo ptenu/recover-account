@@ -7,7 +7,8 @@ if (localStorage.getItem('X-CLIENT-ID') != null) {
 }
 
 const request = axios.create({
-  baseURL: 'https://api.peterboroughtenants.app',
+  withCredentials: true,
+  baseURL: 'http://localhost:8000',
   timeout: 10000,
 });
 
@@ -20,6 +21,7 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(response => {
   nextClientId = response.headers['x-client-id'];
   localStorage.setItem('X-CLIENT-ID', nextClientId);
+  return response
 });
 
 export { request };

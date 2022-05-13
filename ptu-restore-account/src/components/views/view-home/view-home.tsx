@@ -17,10 +17,10 @@ export class ViewHome {
       <Host>
         <content-container>
           <header>
-            <h1>Your PTU account</h1>
+            <h1>Account recovery</h1>
           </header>
           <section>
-            <p>You can use this service if you have never logged into your PTU acount, or you have forgotten your password.</p>
+            <p>You can use this service to authenticate yourself, and change your password, if you have never logged into your PTU acount, or you have forgotten your password.</p>
             <p>
               If you use two factor authentication, or we don't have enough information to verify you, then you won't be able to use this service and will need to get in touch.
             </p>

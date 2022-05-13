@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, Fragment, h } from '@stencil/core';
 import 'ptu-elements';
 import '@stencil/router';
 
@@ -9,7 +9,7 @@ import '@stencil/router';
 export class AppRoot {
   render() {
     return (
-      <div>
+      <Fragment>
         <header-container
           service-title="Restore Account"
           logo-src="https://static.peterboroughtenants.app/SVG/ptu_logo_header.svg"
@@ -31,11 +31,18 @@ export class AppRoot {
               <stencil-route url="/" component="view-home" exact={true} />
               <stencil-route url="/identify" component="view-identify" />
               <stencil-route url="/recover" component="view-recover" />
-              <stencil-route url="/done" component="view-recover" />
+              <stencil-route url="/done" component="view-done" />
             </stencil-route-switch>
           </stencil-router>
         </main>
-      </div>
+
+        <footer-container>
+          <address slot="address">
+            <p>Peterborough Tenants Union Ltd.</p>
+            <p>Company limited by guarantee: 13171833, registered in England & Wales. 82A James Carter Road, Mildenhall, Suffolk, IP28 7DE.</p>
+          </address>
+        </footer-container>
+      </Fragment>
     );
   }
 }

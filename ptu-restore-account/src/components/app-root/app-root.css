@@ -1,3 +1,21 @@
 header-container ul {
     margin: 0;
 }
+
+app-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+app-root > * {
+    flex: 1 0 100%;
+}
+
+app-root > header-container {
+    flex: 0 1 auto;
+}
+
+app-root > footer-container {
+    flex: 0 1 auto;
+}

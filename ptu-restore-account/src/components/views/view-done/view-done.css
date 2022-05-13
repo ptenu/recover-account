@@ -1,3 +1,25 @@
-:host {
-  display: block;
+ul.password-rules li{
+  list-style-type: "↳";
+  margin-left: 5ex;
+  padding-left: 1.33ex;
+}
+
+blockquote a::after{
+  display: inline-block;
+  content: '↗';
+  text-decoration: none;
+  text-decoration-thickness: 0;
+  border: 1px solid var(--blue);
+  height: 1em;
+  width: 1em;
+  margin-left: 1ex;
+}
+
+alert-element header p {
+  font-size: larger;
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 500;
 }
