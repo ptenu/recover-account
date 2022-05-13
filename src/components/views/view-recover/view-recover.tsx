@@ -14,8 +14,7 @@ export class ViewRecover {
   @State() error = '';
 
   updateCode(e) {
-    const element = document.getElementById('pin-input');
-    this.code = element.getAttribute('value') + e.target.value;
+    this.code = e.target.value;
 
     if (this.code.length == 6) {
       this.verify();
@@ -82,7 +81,7 @@ export class ViewRecover {
               </alert-element>
             )}
             <field-element label="One time code">
-              <text-input id="pin-input" type="number" width={18} onInput={this.updateCode.bind(this)} hint="The next page will load as soon as you enter 6 digits."></text-input>
+              <text-input id="pin-input" type="number" width={18} onInput={e => this.updateCode(e)} hint="The next page will load as soon as you enter 6 digits."></text-input>
             </field-element>
           </section>
         </content-container>

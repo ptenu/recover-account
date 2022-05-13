@@ -1,6 +1,6 @@
 import { createStore } from '@stencil/store';
 
-const { state, onChange } = createStore({
+const { state } = createStore({
   challengeMethod: null,
 });
 
